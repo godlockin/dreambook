@@ -13,7 +13,8 @@ export async function onRequestPost(context) {
 
     // Map requested size to Gemini supported sizes.
     // Gemini 3 Pro Image supports '1K' and '2K'.
-    // If user requested 512, we use 1K as it is the minimum quality for this model.
+    // If user requested '512', we use '1K' as the closest valid supported size,
+    // as the model does not strictly support '512' as an enum parameter in this context.
     let effectiveSize = size;
     if (size === '512') {
         effectiveSize = '1K';
@@ -49,6 +50,7 @@ export async function onRequestPost(context) {
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    console.error(err);
+    return new Response(JSON.stringify({ error: err.message || "Image generation failed" }), { status: 500 });
   }
 }

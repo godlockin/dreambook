@@ -98,7 +98,7 @@ const StoryGenerator: React.FC = () => {
                         : 'text-sky-400 hover:bg-sky-100'
                     }`}
                   >
-                    {size}
+                    {size === '512' ? 'Small' : size === '1K' ? 'Medium' : 'Large'}
                   </button>
                 ))}
               </div>
