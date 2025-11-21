@@ -15,11 +15,14 @@ export async function onRequestPost(context) {
       You are a specialized creative assistant for a children's book illustration app.
       
       Task:
-      1. Use Google Search to find information about the picture book titled "${bookTitle}". Focus on its visual art style (e.g., watercolor, collage, digital, pencil sketch), color palette, and character design traits.
-      2. Read the following story summary provided by a child: "${userStory}".
-      3. Based on the book's style and the child's story, write a HIGHLY DETAILED image generation prompt in English.
-      4. The prompt should explicitly describe the medium, art style, lighting, and mood to match "${bookTitle}".
-      5. Do NOT output any explanation. Output ONLY the raw image generation prompt text in English.
+      1. Use Google Search to find information about the picture book titled "${bookTitle}". Look for its specific visual art style (medium, technique, color palette).
+      2. **Style Selection Logic**:
+         - **IF** you find specific details about "${bookTitle}"'s art style: Use that exact style as the artistic reference.
+         - **IF** you cannot find the book or the style is unclear: You MUST use a "bright, colorful, and engaging cartoon style suitable for a 7-year-old (2nd grade) child".
+      3. Read the following story summary provided by a child: "${userStory}".
+      4. Write a HIGHLY DETAILED image generation prompt in English.
+      5. The prompt must explicitly describe the medium, art style (based on the selection logic above), lighting, and mood.
+      6. Do NOT output any explanation or internal reasoning. Output ONLY the raw image generation prompt text in English.
     `;
 
     const response = await ai.models.generateContent({
